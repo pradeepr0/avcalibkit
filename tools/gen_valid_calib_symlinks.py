@@ -8,6 +8,8 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(
         "Generate symlinks for valid_calibration.txt files within a avcalibration repo")
+    parser.add_argument('-q', '--quiet', action='store_true', default=False,
+        help="Do not print created / updated symlinks")
     parser.add_argument('git_root', nargs='*',
         help="Root dir for the avcalibration repo. Defauts to `/etc/avcalibration`")
     args = parser.parse_args()
@@ -15,16 +17,23 @@ def main():
     if not args.git_root:
         args.git_root = "/etc/avcalibration"
 
-    for valid_calib_txt in glob.iglob(args.git_root + '/**/valid_calibration.txt'):
+    for valid_calib_txt in sorted(glob.iglob(args.git_root + '/**/valid_calibration.txt')):
         with open(valid_calib_txt) as f:
             actual_filename = f.read().rstrip('\n')
         dir = os.path.dirname(valid_calib_txt)
         src = os.path.join(dir, actual_filename)
         tgt = os.path.join(dir, "valid_calibration.pbcal")
 
+        updated = False
         if os.path.islink(tgt):
+            updated = True
             os.remove(tgt)
+
         os.symlink(src, tgt)
+        if not args.quiet:
+            print('Updated' if updated else 'Created', tgt)
+            print('  -> ', src)
+
 
 if __name__ == '__main__':
     main()
