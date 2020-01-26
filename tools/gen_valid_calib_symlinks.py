@@ -21,18 +21,21 @@ def main():
         with open(valid_calib_txt) as f:
             actual_filename = f.read().rstrip('\n')
         dir = os.path.dirname(valid_calib_txt)
-        src = os.path.join(dir, actual_filename)
-        tgt = os.path.join(dir, "valid_calibration.pbcal")
+        tgt = os.path.join(dir, actual_filename)
+        symlink = os.path.join(dir, "valid_calibration.pbcal")
 
-        updated = False
-        if os.path.islink(tgt):
-            updated = True
-            os.remove(tgt)
+        requires_update = False
+        if os.path.islink(symlink):
+            if os.readlink(symlink) == tgt:
+                continue
+            else:
+                requires_update = True
+                os.remove(symlink)
 
-        os.symlink(src, tgt)
+        os.symlink(tgt, symlink)
         if not args.quiet:
-            print('Updated' if updated else 'Created', tgt)
-            print('  -> ', src)
+            print('Updated' if requires_update else 'Created', symlink)
+            print('  -> ', tgt)
 
 
 if __name__ == '__main__':
