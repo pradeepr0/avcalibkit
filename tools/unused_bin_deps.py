@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+"""
+NOTE: WIP. This does not work as expected yet.
+"""
 
 from functools import lru_cache
 from pathlib import Path
