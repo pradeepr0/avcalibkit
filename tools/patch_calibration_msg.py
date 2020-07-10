@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 import google.protobuf.text_format as pbtxtfmt
-from src.calibration.lib_calibration.calibration_pb2 import \
+from pb.lyft.avsoftware.calibration.calibration_pb2 import \
     VehicleCalibrationProto, CalibrationDataSegmentProto, CalibrationDataGroupProto
 
 
