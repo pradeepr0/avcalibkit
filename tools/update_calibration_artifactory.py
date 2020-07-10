@@ -9,9 +9,8 @@ import glob
 def main():
     import argparse
     parser = argparse.ArgumentParser(
-        "Generate symlinks for valid_calibration.txt files within a avcalibration repo")
-    parser.add_argument('-q', '--quiet', action='store_true', default=False,
-        help="Do not print created / updated symlinks")
+        "Print upload commands for uploading latest valid_calibration files to " +
+        "avcalibration artifactory")
     parser.add_argument('git_root', nargs='*',
         help="Root dir for the avcalibration repo. Defauts to `/etc/avcalibration`")
     args = parser.parse_args()
