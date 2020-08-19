@@ -24,16 +24,14 @@ def main():
         with open(valid_calib_txt) as f:
             actual_filename = f.read().rstrip('\n')
         dir = os.path.dirname(valid_calib_txt)
-        relative_url = dir[len(args.git_root):]
         print("curl -T "
               "'{dir}/{actual_filename}' "
-              "'{ARTIFACTORY_BASE_URL}/{relative_url}/{actual_filename}'".format(**locals()))
+              "'{ARTIFACTORY_BASE_URL}/{dir}/{actual_filename}'".format(**locals()))
 
     for config_pb in sorted(glob.iglob(args.git_root + '/config/**/*.pb')):
-        relative_url = config_pb[len(args.git_root):]
         print("curl -T "
               "'{config_pb}' "
-              "'{ARTIFACTORY_BASE_URL}/{relative_url}'".format(**locals()))
+              "'{ARTIFACTORY_BASE_URL}/{config_pb}'".format(**locals()))
 
 if __name__ == '__main__':
     main()

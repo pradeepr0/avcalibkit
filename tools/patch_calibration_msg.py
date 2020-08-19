@@ -13,7 +13,7 @@ from pb.lyft.avsoftware.calibration.calibration_pb2 import \
 def main():
     import argparse
     parser = argparse.ArgumentParser(
-        "Patch a calibration .pb{cal,txt} file with an update")
+        "Patch a calibration .pb{cal,txt} file with an car-turner timestamp update")
     parser.add_argument('-f', '--out-format', choices=['pbtxt', 'pb'],
         default='pbtxt',
         help='Output format: protobuf binary or text.')
@@ -27,7 +27,6 @@ def main():
     parser.add_argument('data_segment_msg', type=str,
         help='time_cam_lidar.pbtxt` file containing a `CalibrationDataSegmentProto` message')
     args = parser.parse_args()
-
 
     # If `args.src_msg` is a valid hostname then set it to an actual filename
     link_file = '/etc/avcalibration/{}/valid_calibration.txt'.format(args.src_msg)
